@@ -1,0 +1,47 @@
+package com.example.sailingadventures;
+//Name: Keyanna Frost
+//Date: 8/19/2020
+import android.app.DatePickerDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity{
+    private TextView reservation;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        reservation = (TextView) findViewById(R.id.txtReservation);
+
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MainActivity.this, dateSetListener,
+                       calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                       calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+    Calendar calendar = Calendar.getInstance();
+    DateFormat txtDate = DateFormat.getDateInstance();
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            reservation.setText("Your reservation is set for "
+                    + txtDate.format(calendar.getTime()));
+        }
+    };
+}
+
+
